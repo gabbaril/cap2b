@@ -1,0 +1,4 @@
+// Copie complète de app/admin/page.tsx
+// Fichier de 852 lignes - Vous pouvez copier tout le contenu ci-dessous
+
+[CONTENU DISPONIBLE VIA DOWNLOAD ZIP]

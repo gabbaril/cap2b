@@ -17,6 +17,7 @@ import { BrokersPanel } from "@/components/admin/clients/brokers-panel"
 import { PasswordsPanel } from "@/components/admin/users/passwords-panel"
 import { DisqualifyDialog } from "@/components/admin/modals/disqualify-dialog"
 import { ResetPasswordDialog } from "@/components/admin/modals/reset-password-dialog"
+import { DeleteUserDialog } from "@/components/admin/modals/delete-user-dialog"
 import { EcmDialog } from "@/components/admin/modals/ecm-dialog"
 
 interface Broker {
@@ -98,6 +99,11 @@ export default function AdminPage() {
   const [newPassword, setNewPassword] = useState("")
   const [passwordError, setPasswordError] = useState("")
   const [passwordSuccess, setPasswordSuccess] = useState("")
+
+  const [showDeleteUserModal, setShowDeleteUserModal] = useState(false)
+  const [selectedUserToDelete, setSelectedUserToDelete] = useState<User | null>(null)
+  const [isDeletingUser, setIsDeletingUser] = useState(false)
+  const [deleteUserError, setDeleteUserError] = useState("")
 
   const [newBroker, setNewBroker] = useState({
     email: "",
@@ -265,6 +271,33 @@ export default function AdminPage() {
     } catch (error) {
       console.error("Error resetting password:", error)
       setPasswordError("Erreur serveur")
+    }
+  }
+
+  const handleDeleteUser = async () => {
+    if (!selectedUserToDelete) return
+
+    setIsDeletingUser(true)
+    setDeleteUserError("")
+
+    try {
+      const res = await fetch(`/api/admin/users/${selectedUserToDelete.id}`, {
+        method: "DELETE",
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || "Erreur lors de la suppression")
+      }
+
+      setShowDeleteUserModal(false)
+      setSelectedUserToDelete(null)
+      fetchData() // refresh users list
+    } catch (error: any) {
+      console.error(error)
+      setDeleteUserError(error.message)
+    } finally {
+      setIsDeletingUser(false)
     }
   }
 
@@ -613,6 +646,11 @@ export default function AdminPage() {
                 setPasswordError("")
                 setPasswordSuccess("")
               }}
+              onOpenDelete={(user) => {
+                setSelectedUserToDelete(user)
+                setShowDeleteUserModal(true)
+                setDeleteUserError("")
+              }}
             />
           </TabsContent>
         </Tabs>
@@ -664,6 +702,15 @@ export default function AdminPage() {
           setPasswordError("")
           setPasswordSuccess("")
         }}
+      />
+
+      <DeleteUserDialog
+        open={showDeleteUserModal}
+        onOpenChange={setShowDeleteUserModal}
+        user={selectedUserToDelete}
+        onConfirm={handleDeleteUser}
+        isDeleting={isDeletingUser}
+        error={deleteUserError}
       />
 
       <EcmDialog open={showEcmDialog} onOpenChange={setShowEcmDialog} lead={selectedLeadForEcm} />

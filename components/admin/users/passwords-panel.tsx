@@ -36,9 +36,10 @@ interface PasswordsPanelProps {
   users: User[]
   brokers: Broker[]
   onOpenReset: (user: User) => void
+  onOpenDelete: (user: User) => void
 }
 
-export function PasswordsPanel({ users, brokers, onOpenReset }: PasswordsPanelProps) {
+export function PasswordsPanel({ users, brokers, onOpenReset, onOpenDelete }: PasswordsPanelProps) {
   const [showCreateAuthDialog, setShowCreateAuthDialog] = useState(false)
   const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null)
   const [newPassword, setNewPassword] = useState("")
@@ -164,9 +165,21 @@ export function PasswordsPanel({ users, brokers, onOpenReset }: PasswordsPanelPr
                   <TableCell className="text-sm">
                     {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString("fr-CA") : "Jamais"}
                   </TableCell>
-                  <TableCell>
-                    <Button size="sm" variant="outline" onClick={() => onOpenReset(user)}>
+                  <TableCell className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => onOpenReset(user)}
+                    >
                       Réinitialiser
+                    </Button>
+
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => onOpenDelete(user)}
+                    >
+                      Supprimer
                     </Button>
                   </TableCell>
                 </TableRow>

@@ -7,20 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-
-interface Broker {
-  id: string
-  email: string
-  full_name: string
-  company_name: string | null
-  phone: string | null
-  territory: string | null
-  is_active: boolean
-  created_at: string
-}
+import { Broker, Lead, User } from "@/types/admin"
 
 interface BrokersPanelProps {
   brokers: Broker[]
+  users: User[]
+  leads: Lead[]
   newBroker: {
     email: string
     fullName: string
@@ -30,9 +22,18 @@ interface BrokersPanelProps {
   }
   setNewBroker: (broker: any) => void
   handleCreateBroker: (e: React.FormEvent) => void
+  handleDeleteBroker: (brokerId: string) => void
 }
 
-export function BrokersPanel({ brokers, newBroker, setNewBroker, handleCreateBroker }: BrokersPanelProps) {
+export function BrokersPanel({
+  brokers,
+  users,
+  leads,
+  newBroker,
+  setNewBroker,
+  handleCreateBroker,
+  handleDeleteBroker
+}: BrokersPanelProps) {
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       <Card className="p-6">
@@ -91,25 +92,43 @@ export function BrokersPanel({ brokers, newBroker, setNewBroker, handleCreateBro
       <Card className="p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Clients ({brokers.length})</h2>
         <div className="space-y-3 max-h-[500px] overflow-y-auto">
-          {brokers.map((broker) => (
-            <div key={broker.id} className="border border-gray-200 rounded-lg p-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="font-semibold text-gray-900">{broker.full_name}</div>
-                  <div className="text-sm text-gray-600">{broker.email}</div>
-                  {broker.company_name && <div className="text-sm text-gray-500">{broker.company_name}</div>}
-                  {broker.territory && (
-                    <Badge variant="outline" className="mt-2">
-                      {broker.territory}
+          {brokers.map((broker) => {
+            const hasUser = users.some((u) => u.email === broker.email)
+            const hasLeads = leads.some((l) => l.assigned_to === broker.id)
+
+            return (
+              <div key={broker.id} className="border border-gray-200 rounded-lg p-4">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="font-semibold text-gray-900">{broker.full_name}</div>
+                    <div className="text-sm text-gray-600">{broker.email}</div>
+                    {broker.company_name && <div className="text-sm text-gray-500">{broker.company_name}</div>}
+                    {broker.territory && (
+                      <Badge variant="outline" className="mt-2">
+                        {broker.territory}
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    <Badge variant={broker.is_active ? "default" : "secondary"}>
+                      {broker.is_active ? "Actif" : "Inactif"}
                     </Badge>
-                  )}
+
+                    {/* Only show delete button if broker has no user and no leads */}
+                    {!hasUser && !hasLeads && (
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleDeleteBroker(broker.id)}
+                      >
+                        Supprimer
+                      </Button>
+                    )}
+                  </div>
                 </div>
-                <Badge variant={broker.is_active ? "default" : "secondary"}>
-                  {broker.is_active ? "Actif" : "Inactif"}
-                </Badge>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </Card>
     </div>

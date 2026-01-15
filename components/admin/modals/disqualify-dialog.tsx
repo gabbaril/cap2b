@@ -15,7 +15,7 @@ Notre équipe vous contactera rapidement après réception.`
 interface DisqualifyDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  selectedLead: { id: string; name: string; email: string } | null
+  selectedLead: { id: string; full_name: string; email: string } | null
   leadToken?: string | null
   template: string
   setTemplate: (template: string) => void
@@ -71,7 +71,7 @@ export function DisqualifyDialog({
           <div className="space-y-4">
             <div>
               <label className="text-sm font-medium">Nom du contact</label>
-              <p className="text-sm text-gray-600">{selectedLead?.name}</p>
+              <p className="text-sm text-gray-600">{selectedLead?.full_name}</p>
             </div>
 
             <div>
@@ -139,7 +139,7 @@ export function DisqualifyDialog({
 
                 <div className="p-6 bg-white">
                   <h2 className="text-red-600 text-xl font-bold mb-4">Valeur Maison Rapide</h2>
-                  <p className="mb-3">Bonjour {selectedLead?.name || ""},</p>
+                  <p className="mb-3">Bonjour {selectedLead?.full_name || ""},</p>
 
                   {template === "reminder" ? (
                     <div className="mb-3" style={{ whiteSpace: "pre-line" }}>

@@ -39,7 +39,7 @@ export function ProblemsSection() {
           {problems.map((problem, index) => (
             <div
               key={index}
-              className="bg-card border border-border rounded-xl p-6 hover:border-foreground/20 transition-colors"
+              className="bg-card border border-border rounded-xl p-6 transition-all duration-150 ease-out hover:border-foreground/20 hover:-translate-y-0.5 hover:shadow-lg"
             >
               <div className="p-3 rounded-lg bg-secondary w-fit mb-4">
                 <problem.icon className="h-6 w-6 text-foreground" />

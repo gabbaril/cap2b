@@ -7,7 +7,8 @@ const benefits = [
   },
   {
     title: "Qualification avant livraison",
-    description: "Chaque lead est vérifié et qualifié selon des critères spécifiques avant d'arriver dans votre pipeline.",
+    description:
+      "Chaque lead est vérifié et qualifié selon des critères spécifiques avant d'arriver dans votre pipeline.",
   },
   {
     title: "Transparence totale des données",
@@ -36,7 +37,8 @@ export function DifferentiationSection() {
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
               Nous ne vendons pas de la visibilité. Nous livrons des opportunités d'affaires qualifiées qui se
-              transforment en revenus. Notre modèle est conçu pour des partenaires qui veulent des résultats mesurables, pas des promesses marketing
+              transforment en revenus. Notre modèle est conçu pour des partenaires qui veulent des résultats mesurables,
+              pas des promesses marketing
             </p>
           </div>
 
@@ -44,7 +46,7 @@ export function DifferentiationSection() {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="flex gap-4 p-4 rounded-xl border border-border bg-card hover:border-foreground/20 transition-colors"
+                className="flex gap-4 p-4 rounded-xl border border-border bg-card transition-all duration-150 ease-out hover:border-foreground/20 hover:-translate-y-0.5 hover:shadow-lg"
               >
                 <CheckCircle2 className="h-6 w-6 text-green-400 shrink-0 mt-0.5" />
                 <div>

@@ -222,3 +222,25 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Scroll reveal animations */
+/* Only apply initial hidden state when JS is enabled */
+body.js-enabled .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 350ms ease-out, transform 350ms ease-out;
+}
+
+.reveal--visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body.js-enabled .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

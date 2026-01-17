@@ -72,6 +72,7 @@ const badgeIcons: Record<string, React.ReactNode> = {
 
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -107,10 +108,17 @@ export function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="text-base px-8">
+              <Button
+                size="lg"
+                className="text-base px-8 transition-all duration-150 ease-out hover:shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background active:scale-[0.98]"
+              >
                 Recevoir des leads qualifiés
               </Button>
-              <Button size="lg" variant="outline" className="text-base px-8 bg-transparent">
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-base px-8 bg-transparent transition-all duration-150 ease-out hover:shadow-md hover:border-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background active:scale-[0.98]"
+              >
                 Demander un audit gratuit
               </Button>
             </div>
@@ -144,7 +152,11 @@ export function HeroSection() {
           </div>
 
           <div className="relative">
-            <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-2xl min-h-[520px] flex flex-col">
+            <div
+              className="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-2xl min-h-[520px] flex flex-col transition-all duration-150 ease-out hover:shadow-3xl hover:border-foreground/10"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
               <div className="space-y-6 flex-1">
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center gap-2">
@@ -227,7 +239,9 @@ export function HeroSection() {
                 {/* Previous Button */}
                 <button
                   onClick={prevSlide}
-                  className="p-2 rounded-full hover:bg-secondary transition-colors opacity-60 hover:opacity-100"
+                  className={`p-2 rounded-full transition-all duration-150 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 active:scale-95 ${
+                    isHovered ? "opacity-100" : "opacity-50"
+                  } hover:opacity-100 hover:bg-secondary/80 hover:shadow-sm`}
                   aria-label="Lead précédent"
                 >
                   <ChevronLeft className="h-5 w-5" />
@@ -239,10 +253,10 @@ export function HeroSection() {
                     <button
                       key={index}
                       onClick={() => setCurrentSlide(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
+                      className={`h-2 rounded-full transition-all duration-150 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-card ${
                         index === currentSlide
                           ? "bg-primary w-4"
-                          : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                          : "bg-muted-foreground/30 w-2 hover:bg-muted-foreground/50"
                       }`}
                       aria-label={`Aller au lead ${index + 1}`}
                       aria-current={index === currentSlide ? "true" : "false"}
@@ -253,7 +267,9 @@ export function HeroSection() {
                 {/* Next Button */}
                 <button
                   onClick={nextSlide}
-                  className="p-2 rounded-full hover:bg-secondary transition-colors opacity-60 hover:opacity-100"
+                  className={`p-2 rounded-full transition-all duration-150 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 active:scale-95 ${
+                    isHovered ? "opacity-100" : "opacity-50"
+                  } hover:opacity-100 hover:bg-secondary/80 hover:shadow-sm`}
                   aria-label="Lead suivant"
                 >
                   <ChevronRight className="h-5 w-5" />

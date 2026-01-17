@@ -42,17 +42,17 @@ export function SolutionSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           {steps.map((step, index) => (
-            <div key={index} className="relative">
-              <div className="flex flex-col items-start">
+            <div key={index} className="relative h-full">
+              <div className="flex flex-col items-start h-full">
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-5xl font-bold text-muted-foreground/20">{step.number}</span>
                   <div className="p-3 rounded-lg bg-secondary">
                     <step.icon className="h-6 w-6 text-foreground" />
                   </div>
                 </div>
-                <h3 className="font-semibold text-xl mb-3">{step.title}</h3>
+                <h3 className="font-semibold text-xl mb-3 min-h-[3.5rem] flex items-start">{step.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
               {index < steps.length - 1 && (

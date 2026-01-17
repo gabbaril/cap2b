@@ -11,7 +11,7 @@ const industries = [
 
 export function IndustriesSection() {
   return (
-    <section id="industries" className="py-20 lg:py-32 bg-secondary/30">
+    <section id="industries" className="reveal py-20 lg:py-32 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
@@ -25,7 +25,8 @@ export function IndustriesSection() {
           {industries.map((industry, index) => (
             <div
               key={index}
-              className="bg-card border border-border rounded-xl p-6 transition-all duration-150 ease-out hover:border-foreground/20 hover:-translate-y-0.5 hover:shadow-lg text-center group"
+              className="reveal bg-card border border-border rounded-xl p-6 transition-all duration-150 ease-out hover:border-foreground/20 hover:-translate-y-0.5 hover:shadow-lg text-center group"
+              style={{ transitionDelay: `${index * 60}ms` }}
             >
               <div className="p-4 rounded-lg bg-secondary w-fit mx-auto mb-4 transition-all duration-150 ease-out group-hover:bg-foreground group-hover:text-background">
                 <industry.icon className="h-6 w-6" />

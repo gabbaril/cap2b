@@ -25,7 +25,7 @@ const problems = [
 
 export function ProblemsSection() {
   return (
-    <section id="problemes" className="py-20 lg:py-32 bg-secondary/30">
+    <section id="problemes" className="reveal py-20 lg:py-32 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
@@ -39,7 +39,8 @@ export function ProblemsSection() {
           {problems.map((problem, index) => (
             <div
               key={index}
-              className="bg-card border border-border rounded-xl p-6 transition-all duration-150 ease-out hover:border-foreground/20 hover:-translate-y-0.5 hover:shadow-lg"
+              className="reveal bg-card border border-border rounded-xl p-6 transition-all duration-150 ease-out hover:border-foreground/20 hover:-translate-y-0.5 hover:shadow-lg"
+              style={{ transitionDelay: `${index * 60}ms` }}
             >
               <div className="p-3 rounded-lg bg-secondary w-fit mb-4">
                 <problem.icon className="h-6 w-6 text-foreground" />

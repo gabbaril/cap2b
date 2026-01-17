@@ -4,7 +4,6 @@ import { useEffect } from "react"
 
 export function useRevealOnScroll() {
   useEffect(() => {
-    // Enable animations by adding js-enabled class
     document.body.classList.add("js-enabled")
 
     const elements = document.querySelectorAll(".reveal")
@@ -20,8 +19,8 @@ export function useRevealOnScroll() {
         })
       },
       {
-        threshold: 0.15,
-        rootMargin: "0px",
+        threshold: 0.12,
+        rootMargin: "0px 0px -10% 0px",
       },
     )
 

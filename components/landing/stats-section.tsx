@@ -7,11 +7,15 @@ const stats = [
 
 export function StatsSection() {
   return (
-    <section className="py-20 lg:py-32 bg-secondary/30">
+    <section className="reveal py-20 lg:py-32 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center transition-all duration-150 ease-out hover:-translate-y-0.5">
+            <div
+              key={index}
+              className="reveal text-center transition-all duration-150 ease-out hover:-translate-y-0.5"
+              style={{ transitionDelay: `${index * 60}ms` }}
+            >
               <div className="text-4xl sm:text-5xl font-bold mb-2">{stat.value}</div>
               <p className="text-muted-foreground">{stat.label}</p>
             </div>

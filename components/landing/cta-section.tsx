@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react"
 
 export function CtaSection() {
   return (
-    <section className="py-20 lg:py-32 bg-foreground text-background">
+    <section className="reveal py-20 lg:py-32 bg-foreground text-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
           Prêt à recevoir plus de clients,

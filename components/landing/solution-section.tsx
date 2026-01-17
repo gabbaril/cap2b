@@ -29,7 +29,7 @@ const steps = [
 
 export function SolutionSection() {
   return (
-    <section id="methode" className="py-20 lg:py-32">
+    <section id="methode" className="reveal py-20 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
@@ -44,7 +44,7 @@ export function SolutionSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           {steps.map((step, index) => (
-            <div key={index} className="relative h-full">
+            <div key={index} className="reveal relative h-full" style={{ transitionDelay: `${index * 60}ms` }}>
               <div className="flex flex-col items-start h-full">
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-5xl font-bold text-muted-foreground/20">{step.number}</span>

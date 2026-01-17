@@ -17,35 +17,39 @@ import {
   ChevronRight,
   Zap,
   Briefcase,
+  Flame,
 } from "lucide-react"
 
 const leadsData = [
   {
     industry: "Courtage immobilier",
+    intentLabel: "Lead vendeur à intention forte",
     name: "Jean M.",
     sector: "Immobilier résidentiel",
     location: "Montréal, Québec",
     intention: "Vente à court terme (3–6 mois)",
     source: "Recherche locale",
     budgetLabel: "Valeur estimée de la propriété",
-    budgetValue: "750 000$",
+    budgetValue: "750 000 $",
     status: "Qualifié et validé",
     badges: ["Lead exclusif", "Vérifié", "Intention confirmée", "Livré < 24h"],
   },
   {
     industry: "Courtage hypothécaire",
+    intentLabel: "Lead refinancement chaud",
     name: "Amélie G.",
     sector: "Financement immobilier",
     location: "Laval, Québec",
     intention: "Refinancement (30–45 jours)",
     source: "Demande de taux actuel",
     budgetLabel: "Valeur estimée du refinancement",
-    budgetValue: "500 000",
+    budgetValue: "500 000 $",
     status: "Qualifié et validé",
     badges: ["Lead exclusif", "Vérifié", "Intention confirmée", "Livré < 24h"],
   },
   {
     industry: "Services professionnels (Psychologie)",
+    intentLabel: "Lead besoin actif",
     name: "Marc D.",
     sector: "Santé mentale",
     location: "Québec, Québec",
@@ -142,12 +146,23 @@ export function HeroSection() {
           <div className="relative">
             <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-2xl min-h-[520px] flex flex-col">
               <div className="space-y-6 flex-1">
-                {/* Header with Industry Pill */}
                 <div className="space-y-3">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
-                    <Briefcase className="h-3 w-3" />
-                    {currentLead.industry}
-                  </span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold"
+                      aria-label={`Industrie: ${currentLead.industry}`}
+                    >
+                      <Briefcase className="h-3 w-3" />
+                      {currentLead.industry}
+                    </span>
+                    <span
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-secondary/50 text-foreground/80 text-xs font-medium"
+                      aria-label={`Niveau d'intention: ${currentLead.intentLabel}`}
+                    >
+                      <Flame className="h-3 w-3 text-orange-400" />
+                      {currentLead.intentLabel}
+                    </span>
+                  </div>
                   <h3 className="text-lg font-semibold">Exemple de lead livré à nos partenaires</h3>
                   <p className="text-sm text-muted-foreground">
                     Données réelles, qualification complète, livraison en temps réel

@@ -230,7 +230,7 @@ export function HeroSection() {
 
                 {/* Footer */}
                 <p className="text-xs text-muted-foreground pt-2">
-                  Ce type de lead est livré directement dans votre pipeline.
+                
                 </p>
               </div>
 

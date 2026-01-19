@@ -1,6 +1,6 @@
 const stats = [
   { value: "29000+", label: "Leads générés" },
-  { value: "15+", label: "Industries servies" },
+  { value: "70+", label: "Clients servis" },
   { value: "2.4x", label: "ROI moyen observé" },
   { value: "92%", label: "Taux de satisfaction" },
 ]

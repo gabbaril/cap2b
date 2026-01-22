@@ -268,8 +268,8 @@ export default function BrokerLeadDetailPage() {
             lead.ideal_sale_deadline ||
             lead.approximate_market_value ||
             lead.need_buying_help) && (
-            <Card className="p-6 border-t-4 border-red-600">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 bg-red-600 text-white -mx-6 -mt-6 px-6 py-3 rounded-t-lg">
+            <Card className="p-6 border-t-4 border-foreground">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 bg-foreground text-white -mx-6 -mt-6 px-6 py-3 rounded-t-lg">
                 PROJET DE VENTE
               </h2>
               <div className="space-y-4 text-sm">
@@ -314,7 +314,7 @@ export default function BrokerLeadDetailPage() {
                     <span className="font-semibold text-gray-700">Besoin d'aide pour acheter?</span>
                     <p className="text-gray-900 mt-1">{lead.need_buying_help}</p>
                     {(lead.need_buying_help === "Oui" || lead.need_buying_help === "Peut-être") && (
-                      <div className="ml-4 mt-2 pl-4 border-l-2 border-red-600 space-y-2">
+                      <div className="ml-4 mt-2 pl-4 border-l-2 border-foreground space-y-2">
                         {lead.buying_sector && (
                           <div>
                             <span className="font-medium text-gray-600">Secteur:</span>
@@ -349,8 +349,8 @@ export default function BrokerLeadDetailPage() {
             lead.recent_renovations ||
             lead.garage ||
             lead.property_highlights) && (
-            <Card className="p-6 border-t-4 border-red-600">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 bg-red-600 text-white -mx-6 -mt-6 px-6 py-3 rounded-t-lg">
+            <Card className="p-6 border-t-4 border-foreground">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 bg-foreground text-white -mx-6 -mt-6 px-6 py-3 rounded-t-lg">
                 INFORMATION SUR LA MAISON
               </h2>
               <div className="space-y-4 text-sm">
@@ -439,7 +439,7 @@ export default function BrokerLeadDetailPage() {
                     <span className="font-semibold text-gray-700">Rénovations récentes:</span>
                     <p className="text-gray-900 mt-1">{lead.recent_renovations}</p>
                     {lead.recent_renovations === "Oui" && lead.renovations_details && (
-                      <div className="ml-4 mt-2 pl-4 border-l-2 border-red-600">
+                      <div className="ml-4 mt-2 pl-4 border-l-2 border-foreground">
                         <span className="font-medium text-gray-600">Précisions:</span>
                         <p className="text-gray-900 mt-1 whitespace-pre-wrap">{lead.renovations_details}</p>
                       </div>
@@ -463,8 +463,8 @@ export default function BrokerLeadDetailPage() {
           )}
 
           {(lead.contact_weekday || lead.contact_weekend || lead.contact_notes) && (
-            <Card className="p-6 border-t-4 border-red-600">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 bg-red-600 text-white -mx-6 -mt-6 px-6 py-3 rounded-t-lg">
+            <Card className="p-6 border-t-4 border-foreground">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 bg-foreground text-white -mx-6 -mt-6 px-6 py-3 rounded-t-lg">
                 MOMENT IDÉAL DE CONTACT
               </h2>
               <div className="space-y-4 text-sm">
@@ -483,7 +483,7 @@ export default function BrokerLeadDetailPage() {
                 {lead.contact_notes && (
                   <div>
                     <span className="font-semibold text-gray-700">Notes:</span>
-                    <p className="text-red-600 mt-1 italic whitespace-pre-wrap">{lead.contact_notes}</p>
+                    <p className="text-foreground mt-1 italic whitespace-pre-wrap">{lead.contact_notes}</p>
                   </div>
                 )}
               </div>

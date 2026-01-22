@@ -85,7 +85,7 @@ export default function BrokerLogin() {
           </Button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-600">Mot de passe oublié? Contactez l'administrateur au info@valeurmaisonrapide.com</div>
+        <div className="mt-6 text-center text-sm text-gray-600">Mot de passe oublié? Contactez l'administrateur au info@cap2b.ca</div>
       </Card>
     </div>
   )

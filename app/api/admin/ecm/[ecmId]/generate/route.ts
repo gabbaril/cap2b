@@ -1,10 +1,13 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getSupabaseAdmin } from "@/lib/supabase-server"
 
-export async function POST(request: NextRequest, { params }: { params: { ecmId: string } }) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ ecmId: string }> }
+) {
   try {
     const supabase = getSupabaseAdmin()
-    const ecmId = params.ecmId
+    const { ecmId } = await params
 
     const { data: ecm, error: ecmError } = await supabase.from("ecm_reports").select("*").eq("id", ecmId).single()
 

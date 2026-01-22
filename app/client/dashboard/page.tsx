@@ -60,7 +60,7 @@ export default function BrokerDashboard() {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      router.push("/broker/login")
+      router.push("/client/login")
       return
     }
 
@@ -141,7 +141,7 @@ export default function BrokerDashboard() {
   const handleLogout = async () => {
     const supabase = getSupabaseBrowser()
     await supabase.auth.signOut()
-    router.push("/broker/login")
+    router.push("/client/login")
   }
 
   const getStatusColor = (status: string) => {

@@ -1,10 +1,13 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getSupabaseAdmin } from "@/lib/supabase-server"
 
-export async function POST(request: NextRequest, { params }: { params: { ecmId: string } }) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ ecmId: string }> }
+) {
   try {
     const { comparableId } = await request.json()
-    const ecmId = params.ecmId
+    const { ecmId } = await params
 
     if (!comparableId) {
       return NextResponse.json({ error: "Missing comparableId" }, { status: 400 })

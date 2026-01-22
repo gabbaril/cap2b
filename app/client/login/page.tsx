@@ -37,7 +37,7 @@ export default function BrokerLogin() {
       }
 
       if (data.user) {
-        router.push("/broker/dashboard")
+        router.push("/client/dashboard")
       }
     } catch (err) {
       setError("Une erreur s'est produite")

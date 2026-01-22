@@ -79,7 +79,7 @@ export default function BrokerLeadDetailPage() {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      router.push("/broker/login")
+      router.push("/client/login")
       return
     }
 
@@ -123,7 +123,7 @@ export default function BrokerLeadDetailPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Card className="p-8 text-center">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Lead introuvable</h2>
-          <Button onClick={() => router.push("/broker/dashboard")} className="mt-4">
+          <Button onClick={() => router.push("/client/dashboard")} className="mt-4">
             Retour au tableau de bord
           </Button>
         </Card>
@@ -148,7 +148,7 @@ export default function BrokerLeadDetailPage() {
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
-          <Button variant="outline" onClick={() => router.push("/broker/dashboard")}>
+          <Button variant="outline" onClick={() => router.push("/client/dashboard")}>
             ← Retour au tableau de bord
           </Button>
         </div>

@@ -372,7 +372,7 @@ export default function BrokerDashboard() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => router.push(`/broker/leads/${lead.id}`)}
+                          onClick={() => router.push(`/client/leads/${lead.id}`)}
                           className="text-xs"
                         >
                           Voir détails

@@ -246,13 +246,13 @@ export async function POST(request: Request) {
           }
 
           <div style="margin-top: 24px; padding: 16px; background: #f3f4f6; border-radius: 8px;">
-            <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://www.valeurmaisonrapide.com"}/broker/leads/${leadData.id}" 
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://www.cap2b.ca"}/client/leads/${leadData.id}" 
                style="display:inline-block;background:#dc2626;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-weight:bold;font-size:14px;padding:12px 24px;border-radius:8px;">
               Voir les détails complets du lead
             </a>
           </div>
 
-          <p style="color: #666; font-size: 12px; margin-top: 24px;">Email envoyé automatiquement depuis valeurmaisonrapide.com</p>
+          <p style="color: #666; font-size: 12px; margin-top: 24px;">Email envoyé automatiquement depuis cap2b.ca</p>
         </div>
       `
 

@@ -49,12 +49,12 @@ export function formatPhoneForTwilio(phone: string): string {
   return `+${cleaned}`
 }
 
-interface SendSmsOptions {
-  to: string
-  message: string
-}
-
-export async function sendSms({ to, message }: SendSmsOptions): Promise<{
+/**
+ * Send an SMS via Twilio
+ * @param to - Phone number to send to
+ * @param message - Message content
+ */
+export async function sendSms(to: string, message: string): Promise<{
   success: boolean
   messageId?: string
   error?: string

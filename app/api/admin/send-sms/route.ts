@@ -65,10 +65,7 @@ export async function POST(request: Request) {
     }
 
     // Send SMS
-    const result = await sendSms({
-      to: leadPhone,
-      message: message,
-    })
+    const result = await sendSms(leadPhone, message)
 
     if (!result.success) {
       return NextResponse.json(

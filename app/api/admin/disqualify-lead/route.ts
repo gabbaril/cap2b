@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
+import { sendSms, isTwilioConfigured } from "@/lib/twilio"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: Request) {
   try {
-    const { leadEmail, leadName, customSubject, customBody, templateType, leadToken } = await request.json()
+    const { leadEmail, leadName, leadPhone, customSubject, customBody, templateType, leadToken, sendSmsNotification, smsMessage } = await request.json()
 
     const isReminderTemplate = templateType === "reminder"
 
@@ -140,7 +141,19 @@ Lien alternatif :
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json({ success: true, data })
+    // Send SMS if requested and configured
+    let smsResult = null
+    if (sendSmsNotification && leadPhone && smsMessage && isTwilioConfigured()) {
+      try {
+        smsResult = await sendSms(leadPhone, smsMessage)
+        console.log("[v0] SMS envoyé avec succès à:", leadPhone)
+      } catch (smsError: any) {
+        console.error("[v0] Erreur envoi SMS:", smsError)
+        // Don't fail the request if SMS fails, just log it
+      }
+    }
+
+    return NextResponse.json({ success: true, data, smsResult })
   } catch (error) {
     console.error("[v0] Error in disqualify-lead API:", error)
     return NextResponse.json({ error: "Failed to send email" }, { status: 500 })

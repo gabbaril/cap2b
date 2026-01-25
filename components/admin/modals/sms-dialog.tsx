@@ -15,28 +15,32 @@ import {
 } from "@/lib/sms-templates"
 import { MessageSquare, AlertTriangle, CheckCircle2 } from "lucide-react"
 
+interface Lead {
+  id: string
+  full_name: string
+  phone: string
+  address?: string
+  broker_name?: string
+}
+
 interface SmsDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  selectedLead: {
-    id: string
-    full_name: string
-    phone: string
-    address?: string
-  } | null
+  lead: Lead | null
   leadToken?: string | null
-  brokerName?: string | null
-  onSmsSent?: () => void
+  onSuccess?: () => void
 }
 
 export function SmsDialog({
   open,
   onOpenChange,
-  selectedLead,
+  lead,
   leadToken,
-  brokerName,
-  onSmsSent,
+  onSuccess,
 }: SmsDialogProps) {
+  const selectedLead = lead
+  const brokerName = lead?.broker_name || null
+  const onSmsSent = onSuccess
   const [selectedTemplate, setSelectedTemplate] = useState<string>("reminder-finalization")
   const [customMessage, setCustomMessage] = useState<string>("")
   const [isSending, setIsSending] = useState(false)

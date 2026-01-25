@@ -1,41 +1,9 @@
-// Dynamic import to avoid issues if twilio package is not installed
-let twilioModule: typeof import("twilio") | null = null
+/**
+ * Twilio SMS integration using REST API directly (no npm package)
+ * This avoids compatibility issues with the v0 runtime
+ */
 
-async function loadTwilio() {
-  if (!twilioModule) {
-    try {
-      twilioModule = await import("twilio")
-    } catch (e) {
-      console.error("[Twilio] Failed to load twilio package:", e)
-      return null
-    }
-  }
-  return twilioModule
-}
-
-let twilioClient: any = null
-
-export async function getTwilioClient() {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID
-  const authToken = process.env.TWILIO_AUTH_TOKEN
-
-  if (!accountSid || !authToken) {
-    console.warn("[Twilio] TWILIO_ACCOUNT_SID ou TWILIO_AUTH_TOKEN non configuré")
-    return null
-  }
-
-  if (!twilioClient) {
-    const twilio = await loadTwilio()
-    if (!twilio) return null
-    twilioClient = twilio.default(accountSid, authToken)
-  }
-
-  return twilioClient
-}
-
-export function getTwilioPhoneNumber() {
-  return process.env.TWILIO_PHONE_NUMBER
-}
+const TWILIO_API_BASE = "https://api.twilio.com/2010-04-01"
 
 export function isTwilioConfigured() {
   return !!(
@@ -43,6 +11,10 @@ export function isTwilioConfigured() {
     process.env.TWILIO_AUTH_TOKEN && 
     process.env.TWILIO_PHONE_NUMBER
   )
+}
+
+export function getTwilioPhoneNumber() {
+  return process.env.TWILIO_PHONE_NUMBER
 }
 
 /**
@@ -68,7 +40,7 @@ export function formatPhoneForTwilio(phone: string): string {
 }
 
 /**
- * Send an SMS via Twilio
+ * Send an SMS via Twilio REST API
  * @param to - Phone number to send to
  * @param message - Message content
  */
@@ -77,51 +49,68 @@ export async function sendSms(to: string, message: string): Promise<{
   messageId?: string
   error?: string
 }> {
-  const client = await getTwilioClient()
-  const fromNumber = getTwilioPhoneNumber()
+  const accountSid = process.env.TWILIO_ACCOUNT_SID
+  const authToken = process.env.TWILIO_AUTH_TOKEN
+  const fromNumber = process.env.TWILIO_PHONE_NUMBER
 
-  if (!client) {
+  if (!accountSid || !authToken) {
     return {
       success: false,
-      error: "Twilio client non disponible. Vérifiez que le package twilio est installé et les variables d'environnement configurées.",
+      error: "TWILIO_ACCOUNT_SID ou TWILIO_AUTH_TOKEN non configure.",
     }
   }
 
   if (!fromNumber) {
     return {
       success: false,
-      error: "TWILIO_PHONE_NUMBER non configuré.",
+      error: "TWILIO_PHONE_NUMBER non configure.",
     }
   }
 
   try {
     const formattedTo = formatPhoneForTwilio(to)
-    console.log(`[Twilio] Envoi SMS de ${fromNumber} vers ${formattedTo}`)
+    
+    // Build form data for Twilio API
+    const formData = new URLSearchParams()
+    formData.append("To", formattedTo)
+    formData.append("From", fromNumber)
+    formData.append("Body", message)
 
-    const result = await client.messages.create({
-      body: message,
-      from: fromNumber,
-      to: formattedTo,
-    })
+    // Make request to Twilio REST API
+    const response = await fetch(
+      `${TWILIO_API_BASE}/Accounts/${accountSid}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString("base64")}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      }
+    )
 
-    console.log(`[Twilio] SMS envoyé avec succès: ${result.sid}`)
+    const data = await response.json()
+
+    if (!response.ok) {
+      console.error("[Twilio] API error:", data)
+      return {
+        success: false,
+        error: data.message || `Erreur Twilio (${response.status}): ${data.code || "Unknown"}`,
+      }
+    }
+
+    console.log(`[Twilio] SMS envoye avec succes: ${data.sid}`)
 
     return {
       success: true,
-      messageId: result.sid,
+      messageId: data.sid,
     }
   } catch (error: any) {
     console.error("[Twilio] Erreur envoi SMS:", error)
 
-    // Extract more useful error message from Twilio errors
-    let errorMessage = error.message || "Erreur lors de l'envoi du SMS"
-    if (error.code) {
-      errorMessage = `Erreur Twilio ${error.code}: ${errorMessage}`
-    }
-
     return {
       success: false,
-      error: errorMessage,
+      error: error.message || "Erreur lors de l'envoi du SMS",
     }
   }
 }

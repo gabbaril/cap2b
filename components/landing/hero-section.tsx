@@ -112,14 +112,11 @@ export function HeroSection() {
                 size="lg"
                 className="text-base px-8 transition-all duration-150 ease-out hover:shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background active:scale-[0.98]"
               >
-                Recevoir des leads qualifiés
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-base px-8 bg-transparent transition-all duration-150 ease-out hover:shadow-md hover:border-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background active:scale-[0.98]"
-              >
-                Demander un audit gratuit
+                <a
+                  href="mailto:info@cap2b.ca"
+                >
+                  Recevoir des leads qualifiés
+                </a>
               </Button>
             </div>
 

@@ -36,7 +36,13 @@ export function Header() {
                 Connexion
               </a>
             </Button>
-            <Button size="sm">Recevoir des leads</Button>
+            <Button size="sm">
+              <a
+                  href="mailto:info@cap2b.ca"
+                >
+                Recevoir des leads
+              </a>
+            </Button>
           </div>
 
           <button className="md:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>

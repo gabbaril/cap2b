@@ -19,7 +19,11 @@ export function CtaSection() {
             variant="secondary"
             className="text-base px-8 gap-2 transition-all duration-150 ease-out hover:shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-background/50 focus:ring-offset-2 focus:ring-offset-foreground active:scale-[0.98]"
           >
-            Planifier un appel stratégique
+            <a
+              href="mailto:info@cap2b.ca?subject=Demande%20de%20rendez-vous"
+            >
+              Planifier un appel stratégique
+            </a>
             <ArrowRight className="h-4 w-4" />
           </Button>
           <Button
@@ -27,7 +31,11 @@ export function CtaSection() {
             variant="outline"
             className="text-base px-8 bg-transparent text-background border-background/30 transition-all duration-150 ease-out hover:bg-background/10 hover:text-background hover:border-background/50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-background/50 focus:ring-offset-2 focus:ring-offset-foreground active:scale-[0.98]"
           >
-            Voir si je suis éligible
+            <a
+              href="mailto:info@cap2b.ca"
+            >
+              Voir si je suis éligible
+            </a>
           </Button>
         </div>
       </div>

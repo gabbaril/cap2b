@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Mail, Phone, MapPin, Home, Calendar, Building2, Ruler, Wrench, Sparkles, Target, FileClock, DollarSign } from "lucide-react"
 import { useState } from "react"
+import { OpenToBrokerIndicator } from "@/components/admin/leads/open-to-broker-indicator"
 
 interface Broker {
   id: string
@@ -41,6 +42,8 @@ interface Lead {
   garage?: string
   recent_renovations?: string
   property_highlights?: string
+  open_to_broker?: string | null
+  conversion_url?: string | null
 }
 
 interface LeadDrawerProps {
@@ -93,7 +96,10 @@ export function LeadDrawer({
           <TabsContent value="resume" className="space-y-6 mt-6">
             <div className="space-y-4">
               <div className="pb-4 border-b">
-                <h3 className="text-xl font-bold text-gray-900">{lead.full_name}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-xl font-bold text-gray-900">{lead.full_name}</h3>
+                  <OpenToBrokerIndicator openToBroker={lead.open_to_broker} />
+                </div>
                 <p className="text-sm text-gray-500 font-mono mt-1">#{lead.lead_number}</p>
               </div>
 
@@ -173,6 +179,26 @@ export function LeadDrawer({
                     </p>
                   </div>
                 </div>
+
+
+                {lead.conversion_url && (
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 p-2 bg-gray-100 rounded-lg">
+                      <Target className="h-4 w-4 text-gray-600" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs text-gray-500 mb-0.5">URL de conversion</p>
+                      <a
+                        href={lead.conversion_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm font-medium text-blue-600 hover:text-blue-700 break-all underline"
+                      >
+                        {lead.conversion_url}
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {(lead.sale_reason || lead.potential_sale_desire || lead.ideal_sale_deadline || lead.approximate_market_value) && (

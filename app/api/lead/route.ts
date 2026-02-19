@@ -28,6 +28,7 @@ export async function POST(request: Request) {
       utm_content,
       utm_term,
       referrer,
+      conversion_url,
     } = body
 
     const now = new Date()
@@ -58,6 +59,7 @@ export async function POST(request: Request) {
           utm_medium: utm_medium || null,
           utm_campaign: utm_campaign || null,
           referrer: referrer || null,
+          conversion_url: conversion_url || null,
         })
         .select()
         .single()
@@ -92,6 +94,7 @@ export async function POST(request: Request) {
       ${utm_content ? `<tr><td style="padding: 4px 0; font-weight: bold;">Contenu:</td><td>${utm_content}</td></tr>` : ""}
       ${utm_term ? `<tr><td style="padding: 4px 0; font-weight: bold;">Terme:</td><td>${utm_term}</td></tr>` : ""}
       ${referrer ? `<tr><td style="padding: 4px 0; font-weight: bold;">Referrer:</td><td>${referrer}</td></tr>` : ""}
+      ${conversion_url ? `<tr><td style="padding: 4px 0; font-weight: bold;">Conversion URL:</td><td><a href="${conversion_url}">${conversion_url}</a></td></tr>` : ""}
     `
 
     const finaliseUrl = accessToken

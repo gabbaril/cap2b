@@ -57,5 +57,7 @@ export interface Lead {
   contact_weekday?: string
   contact_weekend?: string
   contact_notes?: string
+  open_to_broker?: string | null
+  conversion_url?: string | null
   brokers?: Broker
 }

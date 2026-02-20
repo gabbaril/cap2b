@@ -64,7 +64,7 @@ export function LeadsKanban({ leads, brokers, onOpenLead, getStatusColor }: Lead
                   onClick={() => onOpenLead(lead)}
                 >
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 justify-between">
                       <div className="font-semibold text-sm">{lead.full_name}</div>
                       <OpenToBrokerIndicator openToBroker={lead.open_to_broker} />
                     </div>

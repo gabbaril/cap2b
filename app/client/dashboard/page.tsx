@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { getSupabaseBrowser } from "@/lib/supabase-client"
 import { LeadsToolbar } from "@/components/admin/leads/leads-toolbar"
 import { BrokerResetPasswordDialog } from "@/components/broker/reset-password-dialog"
+import { OpenToBrokerIndicator } from "@/components/admin/leads/open-to-broker-indicator"
 
 interface Lead {
   id: string
@@ -23,6 +24,7 @@ interface Lead {
   property_type: string
   status: string
   created_at: string
+  open_to_broker: string | null
 }
 
 interface BrokerProfile {
@@ -311,6 +313,7 @@ export default function BrokerDashboard() {
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead></TableHead>
                     <TableHead>Numéro</TableHead>
                     <TableHead>Date</TableHead>
                     <TableHead>Nom</TableHead>
@@ -324,6 +327,7 @@ export default function BrokerDashboard() {
                 <TableBody>
                   {filteredLeads.map((lead) => (
                     <TableRow key={lead.id}>
+                      <TableCell className="font-mono text-xs"><OpenToBrokerIndicator openToBroker={lead.open_to_broker} /></TableCell>
                       <TableCell className="font-mono text-xs">{lead.lead_number}</TableCell>
                       <TableCell className="text-sm text-gray-600">{formatDate(lead.created_at)}</TableCell>
                       <TableCell className="font-medium">{lead.full_name}</TableCell>

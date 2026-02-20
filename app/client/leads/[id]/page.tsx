@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { getSupabaseBrowser } from "@/lib/supabase-client"
+import { OpenToBrokerIndicator } from "@/components/admin/leads/open-to-broker-indicator"
 
 interface Lead {
   id: string
@@ -51,6 +52,7 @@ interface Lead {
   need_buying_help: string | null
   buying_sector: string | null
   buying_budget: string | null
+  open_to_broker: string | null
 }
 
 interface Note {
@@ -164,6 +166,7 @@ export default function BrokerLeadDetailPage() {
               <div className="flex gap-2">
                 <Badge className={statusInfo.className}>{statusInfo.label}</Badge>
                 {lead.is_finalized && <Badge className="bg-green-100 text-green-800">Finalisé</Badge>}
+                <OpenToBrokerIndicator openToBroker={lead.open_to_broker} />
               </div>
             </div>
 

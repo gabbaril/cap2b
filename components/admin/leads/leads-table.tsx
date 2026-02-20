@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card } from "@/components/ui/card"
+import { OpenToBrokerIndicator } from "@/components/admin/leads/open-to-broker-indicator"
 
 interface Broker {
   id: string
@@ -25,6 +26,7 @@ interface Lead {
   assigned_to: string | null
   created_at: string
   is_finalized?: boolean
+  open_to_broker?: string | null
 }
 
 interface LeadsTableProps {
@@ -75,7 +77,10 @@ export function LeadsTable({
               <TableRow key={lead.id}>
                 <TableCell className="font-mono text-xs">{lead.lead_number}</TableCell>
                 <TableCell className="font-medium">
-                  {lead.full_name}
+                  <span className="inline-flex items-center gap-2">
+                    {lead.full_name}
+                    <OpenToBrokerIndicator openToBroker={lead.open_to_broker} />
+                  </span>
                   {lead.is_finalized && (
                     <Badge variant="outline" className="border-green-500 text-green-700 bg-green-50 ml-1">
                       Finalisé

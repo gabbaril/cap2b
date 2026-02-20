@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Mail, Phone, MapPin } from "lucide-react"
+import { OpenToBrokerIndicator } from "@/components/admin/leads/open-to-broker-indicator"
 
 interface Broker {
   id: string
@@ -22,6 +23,7 @@ interface Lead {
   assigned_to: string | null
   created_at: string
   is_finalized?: boolean
+  open_to_broker?: string | null
 }
 
 interface LeadsKanbanProps {
@@ -62,7 +64,10 @@ export function LeadsKanban({ leads, brokers, onOpenLead, getStatusColor }: Lead
                   onClick={() => onOpenLead(lead)}
                 >
                   <div className="space-y-2">
-                    <div className="font-semibold text-sm">{lead.full_name}</div>
+                    <div className="flex items-center gap-2 justify-between">
+                      <div className="font-semibold text-sm">{lead.full_name}</div>
+                      <OpenToBrokerIndicator openToBroker={lead.open_to_broker} />
+                    </div>
                     <div className="text-xs text-gray-500 font-mono">{lead.lead_number}</div>
                     <Badge className={getStatusColor(lead.status)} variant="outline">
                       {lead.property_type}

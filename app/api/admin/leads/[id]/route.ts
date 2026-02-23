@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
+import { sendLeadAssignmentEmail } from "@/lib/lead-assignment-email"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -68,17 +69,49 @@ export async function PATCH(
             assigned_at: null,
           }
 
-    const { error } = await supabase
+    const { data: leadData, error: updateError } = await supabase
       .from("leads")
       .update(updates)
       .eq("id", id)
+      .select("id, lead_number, full_name, address, city")
+      .single()
 
-    if (error) {
-      console.error("[v0] Error updating lead:", error)
+    if (updateError) {
+      console.error("[v0] Error updating lead:", updateError)
       return NextResponse.json(
-        { ok: false, error: error.message },
+        { ok: false, error: updateError.message },
         { status: 500 }
       )
+    }
+
+    if (brokerId && leadData) {
+      const { data: brokerData, error: brokerError } = await supabase
+        .from("brokers")
+        .select("email, full_name")
+        .eq("id", brokerId)
+        .single()
+
+      if (brokerError) {
+        console.error("[v0] Error fetching broker for assignment email:", brokerError)
+      } else {
+        try {
+          await sendLeadAssignmentEmail({
+            recipient: {
+              email: brokerData.email,
+              fullName: brokerData.full_name,
+            },
+            lead: {
+              id: leadData.id,
+              leadNumber: leadData.lead_number,
+              fullName: leadData.full_name,
+              address: leadData.address,
+              city: leadData.city,
+            },
+          })
+        } catch (emailError) {
+          console.error("[v0] Error sending broker assignment email:", emailError)
+        }
+      }
     }
 
     return NextResponse.json({ ok: true })

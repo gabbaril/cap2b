@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { getSupabaseAdmin } from "@/lib/supabase-server"
+import { sendLeadAssignmentEmail } from "@/lib/lead-assignment-email"
 
 export async function POST(request: Request) {
   try {
@@ -34,6 +35,33 @@ export async function POST(request: Request) {
         return NextResponse.json({ ok: false, error: "Lead déjà assigné à ce client" }, { status: 400 })
       }
       return NextResponse.json({ ok: false, error: assignError.message }, { status: 500 })
+    }
+
+    const [{ data: clientData, error: clientError }, { data: leadData, error: leadError }] = await Promise.all([
+      supabase.from("clients").select("email, full_name").eq("id", clientId).single(),
+      supabase.from("leads").select("id, lead_number, full_name, address, city").eq("id", leadId).single(),
+    ])
+
+    if (clientError || leadError || !clientData || !leadData) {
+      console.error("[v0] Erreur récupération données courriel assignation client:", { clientError, leadError })
+    } else {
+      try {
+        await sendLeadAssignmentEmail({
+          recipient: {
+            email: clientData.email,
+            fullName: clientData.full_name,
+          },
+          lead: {
+            id: leadData.id,
+            leadNumber: leadData.lead_number,
+            fullName: leadData.full_name,
+            address: leadData.address,
+            city: leadData.city,
+          },
+        })
+      } catch (emailError) {
+        console.error("[v0] Erreur envoi courriel assignation client:", emailError)
+      }
     }
 
     return NextResponse.json({ ok: true, assignment })

@@ -1,6 +1,6 @@
 "use client"
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -80,8 +80,9 @@ export function LeadDrawer({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-2xl overflow-y-auto px-3">
         <SheetHeader className="pb-4 border-b">
-          <SheetTitle className="text-xl">Détails du Lead</SheetTitle>
-        </SheetHeader>
+<SheetTitle className="text-xl">Détails du Lead</SheetTitle>
+  <SheetDescription className="sr-only">Panneau de détails et gestion du lead sélectionné</SheetDescription>
+  </SheetHeader>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-6">
           <TabsList className="grid w-full grid-cols-2 bg-gray-100">

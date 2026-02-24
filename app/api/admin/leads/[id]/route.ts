@@ -59,15 +59,15 @@ export async function PATCH(
     const updates =
       brokerId
         ? {
-            assigned_to: brokerId,
-            status: "assigned",
-            assigned_at: new Date().toISOString(),
-          }
+          assigned_to: brokerId,
+          status: "assigned",
+          assigned_at: new Date().toISOString(),
+        }
         : {
-            assigned_to: null,
-            status: "unassigned",
-            assigned_at: null,
-          }
+          assigned_to: null,
+          status: "unassigned",
+          assigned_at: null,
+        }
 
     const { error } = await supabase
       .from("leads")
@@ -107,7 +107,7 @@ export async function PATCH(
 
           const emailHtml = `
 <div style="font-family: Arial, sans-serif; font-size: 15px; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <h2 style="color: #dc2626; margin-bottom: 20px;">Valeur Maison Rapide</h2>
+  <h2 style="color: #dc2626; margin-bottom: 20px;">Un nouveau lead vous a été attribué</h2>
 
   <p style="margin-bottom: 15px;">Bonjour ${broker.full_name},</p>
 
@@ -139,13 +139,13 @@ export async function PATCH(
     </tr>
   </table>
 
-  <p style="margin-top: 30px;">Cordialement,<br/>L'équipe Valeur Maison Rapide</p>
+  <p style="margin-top: 30px;">Cordialement,<br/>L'équipe Cap2B</p>
 
   <p style="color: #9ca3af; font-size: 12px; margin-top: 24px;">Email envoyé automatiquement depuis cap2b.ca</p>
 </div>`
 
           await resend.emails.send({
-            from: "Valeur Maison <nepasrepondre@valeurmaisonrapide.com>",
+            from: "L'équipe Cap2B <nepasrepondre@cap2b.ca>",
             to: broker.email,
             subject: `Nouveau lead attribué - ${lead.full_name}${lead.address ? ` - ${lead.address}` : ""}`,
             html: emailHtml,

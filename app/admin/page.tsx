@@ -129,6 +129,11 @@ export default function AdminPage() {
         return
       }
 
+      const result = await res.json()
+      if (result?.emailNotification && result.emailNotification.ok === false) {
+        console.warn("Lead assigné, mais courriel non envoyé:", result.emailNotification.message)
+      }
+
       fetchData()
       setSelectedLead(null)
       setAssignToBroker("")

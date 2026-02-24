@@ -42,29 +42,37 @@ export async function POST(request: Request) {
       supabase.from("leads").select("id, lead_number, full_name, address, city").eq("id", leadId).single(),
     ])
 
+    let emailNotification: { ok: boolean; message?: string } | null = null
+
     if (clientError || leadError || !clientData || !leadData) {
       console.error("[v0] Erreur récupération données courriel assignation client:", { clientError, leadError })
+      emailNotification = { ok: false, message: clientError?.message || leadError?.message || "Données manquantes" }
     } else {
-      try {
-        await sendLeadAssignmentEmail({
-          recipient: {
-            email: clientData.email,
-            fullName: clientData.full_name,
-          },
-          lead: {
-            id: leadData.id,
-            leadNumber: leadData.lead_number,
-            fullName: leadData.full_name,
-            address: leadData.address,
-            city: leadData.city,
-          },
-        })
-      } catch (emailError) {
-        console.error("[v0] Erreur envoi courriel assignation client:", emailError)
+      const emailResult = await sendLeadAssignmentEmail({
+        recipient: {
+          email: clientData.email,
+          fullName: clientData.full_name,
+        },
+        lead: {
+          id: leadData.id,
+          leadNumber: leadData.lead_number,
+          fullName: leadData.full_name,
+          address: leadData.address,
+          city: leadData.city,
+        },
+      })
+
+      emailNotification = {
+        ok: emailResult.ok,
+        message: emailResult.message,
+      }
+
+      if (!emailResult.ok) {
+        console.error("[v0] Courriel assignation client non envoyé:", emailResult)
       }
     }
 
-    return NextResponse.json({ ok: true, assignment })
+    return NextResponse.json({ ok: true, assignment, emailNotification })
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: `Exception: ${err.message}` }, { status: 500 })
   }

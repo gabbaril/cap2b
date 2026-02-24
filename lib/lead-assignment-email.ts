@@ -13,6 +13,12 @@ type LeadSummary = {
   city?: string | null
 }
 
+export type LeadAssignmentEmailResult = {
+  ok: boolean
+  reason?: "missing_api_key" | "missing_recipient" | "resend_error"
+  message?: string
+}
+
 const DEFAULT_SITE_URL = "https://www.cap2b.ca"
 const DEFAULT_FROM_EMAIL = "CAP2B <onboarding@resend.dev>"
 
@@ -22,12 +28,21 @@ export async function sendLeadAssignmentEmail({
 }: {
   recipient: AssignmentRecipient
   lead: LeadSummary
-}) {
-  if (!process.env.RESEND_API_KEY || !recipient.email) {
-    if (!process.env.RESEND_API_KEY) {
-      console.warn("[v0] RESEND_API_KEY manquante: courriel d'assignation non envoyé")
+}): Promise<LeadAssignmentEmailResult> {
+  if (!process.env.RESEND_API_KEY) {
+    return {
+      ok: false,
+      reason: "missing_api_key",
+      message: "RESEND_API_KEY manquante",
     }
-    return
+  }
+
+  if (!recipient.email) {
+    return {
+      ok: false,
+      reason: "missing_recipient",
+      message: "Aucun destinataire de courriel",
+    }
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
@@ -62,6 +77,12 @@ export async function sendLeadAssignmentEmail({
   })
 
   if (error) {
-    throw new Error(error.message)
+    return {
+      ok: false,
+      reason: "resend_error",
+      message: error.message,
+    }
   }
+
+  return { ok: true }
 }

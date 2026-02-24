@@ -84,6 +84,8 @@ export async function PATCH(
       )
     }
 
+    let emailNotification: { ok: boolean; message?: string } | null = null
+
     if (brokerId && leadData) {
       const { data: brokerData, error: brokerError } = await supabase
         .from("brokers")
@@ -93,28 +95,34 @@ export async function PATCH(
 
       if (brokerError) {
         console.error("[v0] Error fetching broker for assignment email:", brokerError)
+        emailNotification = { ok: false, message: brokerError.message }
       } else {
-        try {
-          await sendLeadAssignmentEmail({
-            recipient: {
-              email: brokerData.email,
-              fullName: brokerData.full_name,
-            },
-            lead: {
-              id: leadData.id,
-              leadNumber: leadData.lead_number,
-              fullName: leadData.full_name,
-              address: leadData.address,
-              city: leadData.city,
-            },
-          })
-        } catch (emailError) {
-          console.error("[v0] Error sending broker assignment email:", emailError)
+        const emailResult = await sendLeadAssignmentEmail({
+          recipient: {
+            email: brokerData.email,
+            fullName: brokerData.full_name,
+          },
+          lead: {
+            id: leadData.id,
+            leadNumber: leadData.lead_number,
+            fullName: leadData.full_name,
+            address: leadData.address,
+            city: leadData.city,
+          },
+        })
+
+        emailNotification = {
+          ok: emailResult.ok,
+          message: emailResult.message,
+        }
+
+        if (!emailResult.ok) {
+          console.error("[v0] Broker assignment email not sent:", emailResult)
         }
       }
     }
 
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, emailNotification })
   } catch (error: any) {
     console.error("[v0] Error in PATCH lead:", error)
     return NextResponse.json(

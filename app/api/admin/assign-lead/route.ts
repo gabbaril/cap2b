@@ -29,29 +29,37 @@ export async function POST(request: Request) {
       .eq("id", brokerId)
       .single()
 
+    let emailNotification: { ok: boolean; message?: string } | null = null
+
     if (brokerError) {
       console.error("[v0] Error fetching broker for assignment email:", brokerError)
+      emailNotification = { ok: false, message: brokerError.message }
     } else {
-      try {
-        await sendLeadAssignmentEmail({
-          recipient: {
-            email: brokerData.email,
-            fullName: brokerData.full_name,
-          },
-          lead: {
-            id: data.id,
-            leadNumber: data.lead_number,
-            fullName: data.full_name,
-            address: data.address,
-            city: data.city,
-          },
-        })
-      } catch (emailError) {
-        console.error("[v0] Error sending broker assignment email:", emailError)
+      const emailResult = await sendLeadAssignmentEmail({
+        recipient: {
+          email: brokerData.email,
+          fullName: brokerData.full_name,
+        },
+        lead: {
+          id: data.id,
+          leadNumber: data.lead_number,
+          fullName: data.full_name,
+          address: data.address,
+          city: data.city,
+        },
+      })
+
+      emailNotification = {
+        ok: emailResult.ok,
+        message: emailResult.message,
+      }
+
+      if (!emailResult.ok) {
+        console.error("[v0] Broker assignment email not sent:", emailResult)
       }
     }
 
-    return NextResponse.json(data)
+    return NextResponse.json({ ...data, emailNotification })
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 })
   }

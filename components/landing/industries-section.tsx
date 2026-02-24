@@ -11,7 +11,7 @@ const industries = [
 
 export function IndustriesSection() {
   return (
-    <section id="industries" className="reveal py-20 lg:py-32 bg-background">
+    <section id="industries" className="reveal py-20 lg:py-32 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">

@@ -92,17 +92,17 @@ export function HeroSection() {
   const currentLead = leadsData[currentSlide]
 
   return (
-    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden" style={{ backgroundColor: "#1C3144" }}>
+    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-8">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance leading-[1.1] text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance leading-[1.1]">
               Accélérez la croissance de votre entreprise
               <br />
               <span className="text-accent">avec des leads qualifiés</span>
             </h1>
 
-            <p className="text-lg text-white/70 max-w-xl leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
               Cap2B aide les entreprises de services au Québec à générer des opportunités d'affaires réelles grâce à des
               systèmes de génération de leads performants et mesurables.
             </p>
@@ -120,37 +120,37 @@ export function HeroSection() {
               </Button>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 border-t border-white/20">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 border-t border-border">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-white/10">
-                  <MapPin className="h-5 w-5 text-white" />
+                <div className="p-2 rounded-lg bg-secondary">
+                  <MapPin className="h-5 w-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium text-white">Marché québécois</span>
+                <span className="text-sm font-medium">Marché québécois</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-white/10">
-                  <Target className="h-5 w-5 text-white" />
+                <div className="p-2 rounded-lg bg-secondary">
+                  <Target className="h-5 w-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium text-white">Leads qualifiés</span>
+                <span className="text-sm font-medium">Leads qualifiés</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-white/10">
-                  <BarChart3 className="h-5 w-5 text-white" />
+                <div className="p-2 rounded-lg bg-secondary">
+                  <BarChart3 className="h-5 w-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium text-white">Performance mesurable</span>
+                <span className="text-sm font-medium">Performance mesurable</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-white/10">
-                  <Layers className="h-5 w-5 text-white" />
+                <div className="p-2 rounded-lg bg-secondary">
+                  <Layers className="h-5 w-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium text-white">Approche structurée</span>
+                <span className="text-sm font-medium">Approche structurée</span>
               </div>
             </div>
           </div>
 
           <div className="relative">
             <div
-              className="bg-white border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl min-h-[520px] flex flex-col transition-all duration-150 ease-out hover:shadow-3xl"
+              className="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-2xl min-h-[520px] flex flex-col transition-all duration-150 ease-out hover:shadow-3xl hover:border-foreground/10"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >

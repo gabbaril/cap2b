@@ -29,15 +29,15 @@ const steps = [
 
 export function SolutionSection() {
   return (
-    <section id="methode" className="reveal py-20 lg:py-32" style={{ backgroundColor: "#1C3144" }}>
+    <section id="methode" className="reveal py-20 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance text-white">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
             Un accélérateur de croissance
             <br />
             <span className="text-accent">pensé pour les entreprises d'ici</span>
           </h2>
-          <p className="text-lg text-white/70 leading-relaxed">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             Nous ne vendons pas du marketing. Nous livrons des opportunités d'affaires.
           </p>
         </div>
@@ -47,16 +47,16 @@ export function SolutionSection() {
             <div key={index} className="reveal relative h-full" style={{ transitionDelay: `${index * 60}ms` }}>
               <div className="flex flex-col items-start h-full">
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="text-5xl font-bold text-white/15">{step.number}</span>
-                  <div className="p-3 rounded-lg bg-white/10">
-                    <step.icon className="h-6 w-6 text-white" />
+                  <span className="text-5xl font-bold text-muted-foreground/20">{step.number}</span>
+                  <div className="p-3 rounded-lg bg-secondary">
+                    <step.icon className="h-6 w-6 text-foreground" />
                   </div>
                 </div>
-                <h3 className="font-semibold text-xl mb-3 min-h-[3.5rem] flex items-start text-white">{step.title}</h3>
-                <p className="text-white/70 leading-relaxed">{step.description}</p>
+                <h3 className="font-semibold text-xl mb-3 min-h-[3.5rem] flex items-start">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-white/20 -translate-x-1/2" />
+                <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-border -translate-x-1/2" />
               )}
             </div>
           ))}

@@ -102,8 +102,7 @@ export async function PATCH(
           .single()
 
         if (broker?.email && lead) {
-          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cap2b.ca"
-          const leadUrl = `${siteUrl}/client/leads/${lead.id}`
+          const leadUrl = `https://www.cap2b.ca/client/leads/${lead.id}`
 
           const emailHtml = `
 <div style="font-family: Arial, sans-serif; font-size: 15px; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px;">

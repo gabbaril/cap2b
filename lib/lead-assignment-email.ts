@@ -14,6 +14,7 @@ type LeadSummary = {
 }
 
 const DEFAULT_SITE_URL = "https://www.cap2b.ca"
+const DEFAULT_FROM_EMAIL = "CAP2B <onboarding@resend.dev>"
 
 export async function sendLeadAssignmentEmail({
   recipient,
@@ -23,11 +24,15 @@ export async function sendLeadAssignmentEmail({
   lead: LeadSummary
 }) {
   if (!process.env.RESEND_API_KEY || !recipient.email) {
+    if (!process.env.RESEND_API_KEY) {
+      console.warn("[v0] RESEND_API_KEY manquante: courriel d'assignation non envoyé")
+    }
     return
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL
+  const fromEmail = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
   const leadUrl = `${siteUrl}/client/leads/${lead.id}`
   const recipientName = recipient.fullName || "Bonjour"
   const leadLabel = lead.leadNumber ? `Lead ${lead.leadNumber}` : "Nouveau lead"
@@ -49,10 +54,14 @@ export async function sendLeadAssignmentEmail({
     </div>
   `
 
-  await resend.emails.send({
-    from: "CAP2B <nepasrepondre@valeurmaisonrapide.com>",
+  const { error } = await resend.emails.send({
+    from: fromEmail,
     to: [recipient.email],
     subject: `${leadLabel} - ${lead.fullName}`,
     html,
   })
+
+  if (error) {
+    throw new Error(error.message)
+  }
 }

@@ -8,7 +8,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-primary backdrop-blur-md border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2 h-[100%]">
@@ -16,27 +16,27 @@ export function Header() {
           </div>
 
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#problemes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#problemes" className="text-sm text-primary-foreground hover:text-secondary transition-colors">
               Problèmes
             </a>
-            <a href="#methode" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#methode" className="text-sm text-primary-foreground hover:text-secondary transition-colors">
               Méthode
             </a>
-            <a href="#industries" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#industries" className="text-sm text-primary-foreground hover:text-secondary transition-colors">
               Industries
             </a>
-            <a href="#pourquoi" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#pourquoi" className="text-sm text-primary-foreground hover:text-secondary transition-colors">
               Pourquoi nous
             </a>
           </nav>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3 text-primary-foreground">
             <Button variant="ghost" size="sm">
               <a href="/client/login">
                 Connexion
               </a>
             </Button>
-            <Button size="sm">
+            <Button size="sm" variant="primary">
               <a
                   href="mailto:info@cap2b.ca"
                 >
@@ -45,7 +45,7 @@ export function Header() {
             </Button>
           </div>
 
-          <button className="md:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <button className="md:hidden p-2 text-primary-foreground" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
@@ -53,23 +53,23 @@ export function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col gap-4">
-              <a href="#problemes" className="text-sm text-muted-foreground hover:text-foreground">
+              <a href="#problemes" className="text-sm text-primary-foreground hover:text-accent">
                 Problèmes
               </a>
-              <a href="#methode" className="text-sm text-muted-foreground hover:text-foreground">
+              <a href="#methode" className="text-sm text-primary-foreground hover:text-accent">
                 Méthode
               </a>
-              <a href="#industries" className="text-sm text-muted-foreground hover:text-foreground">
+              <a href="#industries" className="text-sm text-primary-foreground hover:text-accent">
                 Industries
               </a>
-              <a href="#pourquoi" className="text-sm text-muted-foreground hover:text-foreground">
+              <a href="#pourquoi" className="text-sm text-primary-foreground hover:text-accent">
                 Pourquoi nous
               </a>
-              <div className="flex flex-col gap-2 pt-4 border-t border-border">
+              <div className="flex flex-col gap-2 pt-4 border-t border-border text-primary-foreground">
                 <Button variant="ghost" size="sm">
                   Connexion
                 </Button>
-                <Button size="sm">Recevoir des leads</Button>
+                <Button size="sm" variant="primary">Recevoir des leads</Button>
               </div>
             </nav>
           </div>

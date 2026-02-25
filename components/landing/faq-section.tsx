@@ -27,18 +27,18 @@ const faqs = [
 
 export function FaqSection() {
   return (
-    <section className="reveal py-20 lg:py-32">
+    <section className="reveal py-20 lg:py-32 bg-primary">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Questions fréquentes</h2>
-          <p className="text-muted-foreground">Tout ce que vous devez savoir avant de commencer.</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-secondary">Questions fréquentes</h2>
+          <p className="text-primary-foreground">Tout ce que vous devez savoir avant de commencer.</p>
         </div>
 
         <Accordion type="single" collapsible className="w-full">
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left font-semibold">{faq.question}</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
+              <AccordionTrigger className="text-left text-secondary font-semibold">{faq.question}</AccordionTrigger>
+              <AccordionContent className="text-primary-foreground">{faq.answer}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

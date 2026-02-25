@@ -26,16 +26,16 @@ const benefits = [
 
 export function DifferentiationSection() {
   return (
-    <section id="pourquoi" className="reveal py-20 lg:py-32">
+    <section id="pourquoi" className="reveal py-20 lg:py-32 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance text-secondary">
               Pourquoi notre modèle fonctionne
               <br />
               <span className="text-accent">(quand les autres échouent)</span>
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+            <p className="text-lg text-primary-foreground leading-relaxed mb-8">
               Nous ne vendons pas de la visibilité. Nous livrons des opportunités d'affaires qualifiées qui se
               transforment en revenus. Notre modèle est conçu pour des partenaires qui veulent des résultats mesurables,
               pas des promesses marketing
@@ -49,7 +49,7 @@ export function DifferentiationSection() {
                 className="reveal flex gap-4 p-4 rounded-xl border border-border bg-card transition-all duration-150 ease-out hover:border-foreground/20 hover:-translate-y-0.5 hover:shadow-lg"
                 style={{ transitionDelay: `${index * 60}ms` }}
               >
-                <CheckCircle2 className="h-6 w-6 text-green-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-6 w-6 text-accent shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold mb-1">{benefit.title}</h3>
                   <p className="text-sm text-muted-foreground">{benefit.description}</p>

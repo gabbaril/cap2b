@@ -37,9 +37,9 @@ export function IndustriesSection() {
                   Bientot disponible
                 </span>
               )}
-              <div className={`p-4 rounded-lg w-fit mx-auto mb-4 transition-all duration-150 ease-out ${
+              <div className={`p-4 rounded-lg w-fit mx-auto mb-4 transition-all duration-150 ease-out border border-primary/10 ${
                 industry.available 
-                  ? "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground" 
+                  ? "bg-primary/10  text-primary group-hover:bg-primary group-hover:text-primary-foreground" 
                   : "bg-secondary group-hover:bg-foreground group-hover:text-background"
               }`}>
                 <industry.icon className="h-6 w-6" />

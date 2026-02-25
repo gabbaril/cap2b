@@ -92,17 +92,17 @@ export function HeroSection() {
   const currentLead = leadsData[currentSlide]
 
   return (
-    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-8">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance leading-[1.1] text-secondary">
               Accélérez la croissance de votre entreprise
               <br />
               <span className="text-accent">avec des leads qualifiés</span>
             </h1>
 
-            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+            <p className="text-lg text-primary-foreground max-w-xl leading-relaxed">
               Cap2B aide les entreprises de services au Québec à générer des opportunités d'affaires réelles grâce à des
               systèmes de génération de leads performants et mesurables.
             </p>
@@ -110,7 +110,8 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                className="text-base px-8 transition-all duration-150 ease-out hover:shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background active:scale-[0.98]"
+                variant="primary"
+                className="text-base text-primary font-bold px-8 transition-all duration-150 ease-out hover:shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background active:scale-[0.98]"
               >
                 <a
                   href="mailto:info@cap2b.ca"
@@ -118,6 +119,17 @@ export function HeroSection() {
                   Recevoir des leads qualifiés
                 </a>
               </Button>
+              {/* <Button
+                size="lg"
+                variant="secondary"
+                className="text-base font-bold px-8 transition-all duration-150 ease-out hover:shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background active:scale-[0.98]"
+              >
+                <a
+                  href="mailto:info@cap2b.ca"
+                >
+                  Voir les tarifs
+                </a>
+              </Button> */}
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 border-t border-border">
@@ -125,25 +137,25 @@ export function HeroSection() {
                 <div className="p-2 rounded-lg bg-secondary">
                   <MapPin className="h-5 w-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium">Marché québécois</span>
+                <span className="text-sm font-medium text-secondary">Marché québécois</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-secondary">
                   <Target className="h-5 w-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium">Leads qualifiés</span>
+                <span className="text-sm font-medium text-secondary">Leads qualifiés</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-secondary">
                   <BarChart3 className="h-5 w-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium">Performance mesurable</span>
+                <span className="text-sm font-medium text-secondary">Performance mesurable</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-secondary">
                   <Layers className="h-5 w-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium">Approche structurée</span>
+                <span className="text-sm font-medium text-secondary">Approche structurée</span>
               </div>
             </div>
           </div>
@@ -217,7 +229,7 @@ export function HeroSection() {
                   {currentLead.badges.map((badge) => (
                     <span
                       key={badge}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary text-xs font-medium"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-xs font-medium"
                     >
                       {badgeIcons[badge]}
                       {badge}

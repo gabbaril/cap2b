@@ -42,7 +42,7 @@ export function ProblemsSection() {
               className="reveal bg-card border border-border rounded-xl p-6 transition-all duration-150 ease-out hover:border-foreground/20 hover:-translate-y-0.5 hover:shadow-lg"
               style={{ transitionDelay: `${index * 60}ms` }}
             >
-              <div className="p-3 rounded-lg bg-secondary w-fit mb-4">
+              <div className="p-3 rounded-lg bg-secondary w-fit mb-4 border border-primary/10">
                 <problem.icon className="h-6 w-6 text-foreground" />
               </div>
               <h3 className="font-semibold text-lg mb-2">{problem.title}</h3>

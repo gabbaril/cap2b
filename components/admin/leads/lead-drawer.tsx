@@ -53,6 +53,7 @@ interface LeadDrawerProps {
   brokers: Broker[]
   handleAssignLead: (leadId: string, brokerId: string | null) => void
   onDisqualify: (lead: Lead) => void
+  onSetDisqualified: (lead: Lead) => void
   onOpenEcm: (lead: Lead) => void
   getStatusColor: (status: string) => string
   onDelete: (lead: Lead) => void
@@ -65,6 +66,7 @@ export function LeadDrawer({
   brokers,
   handleAssignLead,
   onDisqualify,
+  onSetDisqualified,
   onOpenEcm,
   getStatusColor,
   onDelete,
@@ -457,6 +459,26 @@ export function LeadDrawer({
                   }}
                 >
                   Sélectionner et envoyer l'email
+                </Button>
+              </div>
+
+              <div className="border border-orange-200 rounded-lg p-4 bg-orange-50">
+                <h4 className="font-semibold text-orange-900 mb-1">
+                  Disqualifier le lead
+                </h4>
+                <p className="text-sm text-orange-700 mb-4">
+                  Le lead sera marqué comme disqualifié et masqué par défaut.
+                </p>
+
+                <Button
+                  variant="outline"
+                  className="w-full border-orange-300 text-orange-700 hover:bg-orange-100 hover:text-orange-800 bg-transparent"
+                  onClick={() => {
+                    onSetDisqualified(lead)
+                    onOpenChange(false)
+                  }}
+                >
+                  Disqualifier le lead
                 </Button>
               </div>
 

@@ -50,11 +50,32 @@ export async function PATCH(
 ) {
   try {
     const { id } = await params
-    const { brokerId } = (await request.json()) as {
+    const body = (await request.json()) as {
       brokerId?: string | null
+      status?: string
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+    // If status is directly provided (e.g., for disqualification)
+    if (body.status !== undefined && body.brokerId === undefined) {
+      const { error } = await supabase
+        .from("leads")
+        .update({ status: body.status })
+        .eq("id", id)
+
+      if (error) {
+        console.error("[v0] Error updating lead status:", error)
+        return NextResponse.json(
+          { ok: false, error: error.message },
+          { status: 500 }
+        )
+      }
+
+      return NextResponse.json({ ok: true })
+    }
+
+    const brokerId = body.brokerId
 
     const updates =
       brokerId

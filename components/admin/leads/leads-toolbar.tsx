@@ -3,6 +3,8 @@
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 import { Search, LayoutGrid, Table } from "lucide-react"
 
 interface Broker {
@@ -26,6 +28,8 @@ interface LeadsToolbarProps {
   brokers: Broker[]
   statuses: string[]
   propertyTypes: string[]
+  showDisqualified?: boolean
+  setShowDisqualified?: (value: boolean) => void
 }
 
 export function LeadsToolbar({
@@ -44,6 +48,8 @@ export function LeadsToolbar({
   brokers,
   statuses,
   propertyTypes,
+  showDisqualified,
+  setShowDisqualified,
 }: LeadsToolbarProps) {
   return (
     <div className="bg-white p-4 rounded-lg border space-y-4">
@@ -125,6 +131,19 @@ export function LeadsToolbar({
           </Button>
         </div>
       </div>
+      
+      {showDisqualified !== undefined && setShowDisqualified && (
+        <div className="flex items-center gap-2 pt-2 border-t">
+          <Checkbox
+            id="show-disqualified"
+            checked={showDisqualified}
+            onCheckedChange={(checked) => setShowDisqualified(checked === true)}
+          />
+          <Label htmlFor="show-disqualified" className="text-sm text-gray-600 cursor-pointer">
+            Afficher les leads disqualifiés
+          </Label>
+        </div>
+      )}
     </div>
   )
 }

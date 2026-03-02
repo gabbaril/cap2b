@@ -59,9 +59,14 @@ export async function PATCH(
 
     // If status is directly provided (e.g., for disqualification)
     if (body.status !== undefined && body.brokerId === undefined) {
+      // If disqualifying, also clear assigned_to
+      const updateData = body.status === "disqualified"
+        ? { status: body.status, assigned_to: null, assigned_at: null }
+        : { status: body.status }
+
       const { error } = await supabase
         .from("leads")
-        .update({ status: body.status })
+        .update(updateData)
         .eq("id", id)
 
       if (error) {

@@ -75,6 +75,7 @@ export default function AdminPage() {
   const [assignedFilter, setAssignedFilter] = useState("all")
   const [propertyTypeFilter, setPropertyTypeFilter] = useState("all")
   const [sort, setSort] = useState<"desc" | "asc">("desc")
+  const [showDisqualified, setShowDisqualified] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [drawerLead, setDrawerLead] = useState<Lead | null>(null)
 
@@ -329,6 +330,26 @@ export default function AdminPage() {
     setShowEcmDialog(true)
   }
 
+  const handleSetDisqualified = async (lead: Lead) => {
+    try {
+      const res = await fetch(`/api/admin/leads/${lead.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "disqualified" }),
+      })
+
+      if (!res.ok) {
+        const error = await res.json()
+        console.error("Failed to disqualify lead:", error)
+        return
+      }
+
+      fetchData()
+    } catch (error) {
+      console.error("Error disqualifying lead:", error)
+    }
+  }
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "unassigned":
@@ -341,6 +362,8 @@ export default function AdminPage() {
         return "bg-green-100 text-green-800"
       case "closed":
         return "bg-gray-100 text-gray-800"
+      case "disqualified":
+        return "bg-orange-100 text-orange-800"
       default:
         return "bg-gray-100 text-gray-800"
     }
@@ -419,6 +442,11 @@ export default function AdminPage() {
   const filteredLeads = useMemo(() => {
     let filtered = [...leads]
 
+    // Hide disqualified leads by default
+    if (!showDisqualified) {
+      filtered = filtered.filter((lead) => lead.status !== "disqualified")
+    }
+
     // Search filter
     if (search) {
       const searchLower = search.toLowerCase()
@@ -460,7 +488,7 @@ export default function AdminPage() {
     })
 
     return filtered
-  }, [leads, search, statusFilter, assignedFilter, propertyTypeFilter, sort])
+  }, [leads, search, statusFilter, assignedFilter, propertyTypeFilter, sort, showDisqualified])
 
   const statuses = useMemo(() => {
     const uniqueStatuses = Array.from(new Set(leads.map((l) => l.status || "unclassified")))
@@ -574,6 +602,8 @@ export default function AdminPage() {
               brokers={brokers}
               statuses={statuses}
               propertyTypes={propertyTypes}
+              showDisqualified={showDisqualified}
+              setShowDisqualified={setShowDisqualified}
             />
 
             {view === "kanban" ? (
@@ -582,6 +612,7 @@ export default function AdminPage() {
                 brokers={brokers}
                 onOpenLead={handleOpenLead}
                 getStatusColor={getStatusColor}
+                showDisqualified={showDisqualified}
               />
             ) : (
               <LeadsTable
@@ -639,6 +670,7 @@ export default function AdminPage() {
         brokers={brokers}
         handleAssignLead={handleAssignLead}
         onDisqualify={handleDisqualify}
+        onSetDisqualified={handleSetDisqualified}
         onOpenEcm={handleOpenEcm}
         getStatusColor={getStatusColor}
         onDelete={(lead) => {

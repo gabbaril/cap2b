@@ -39,6 +39,7 @@ export async function POST(request: Request) {
       need_buying_help,
       buying_sector,
       buying_budget,
+      open_to_broker,
     } = body
 
     if (!token) {
@@ -92,10 +93,15 @@ export async function POST(request: Request) {
       )
     }
 
+    // Determine if lead should be disqualified based on open_to_broker
+    const shouldDisqualify = open_to_broker === "Non"
+
     const { error: updateError } = await supabase
       .from("leads")
       .update({
         is_finalized: true,
+        // If open_to_broker is "Non", disqualify and clear assignment
+        ...(shouldDisqualify ? { status: "disqualified", assigned_to: null, assigned_at: null } : {}),
         finalized_at: new Date().toISOString(),
         postal_code: postal_code || null,
         // MOMENT IDÉAL DE CONTACT
@@ -142,6 +148,7 @@ export async function POST(request: Request) {
                 : null,
         buying_sector: buying_sector || null,
         buying_budget: buying_budget || null,
+        open_to_broker: open_to_broker || null,
       })
       .eq("id", tokenData.lead_id)
 

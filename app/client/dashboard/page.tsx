@@ -176,6 +176,9 @@ export default function BrokerDashboard() {
   const filteredLeads = useMemo(() => {
     let filtered = [...leads]
 
+    // Always hide disqualified leads from clients
+    filtered = filtered.filter((lead) => lead.status !== "disqualified")
+
     // Search filter
     if (search) {
       const searchLower = search.toLowerCase()

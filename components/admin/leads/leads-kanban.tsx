@@ -31,23 +31,28 @@ interface LeadsKanbanProps {
   brokers: Broker[]
   onOpenLead: (lead: Lead) => void
   getStatusColor: (status: string) => string
+  showDisqualified?: boolean
 }
 
-export function LeadsKanban({ leads, brokers, onOpenLead, getStatusColor }: LeadsKanbanProps) {
-  const columns = [
+export function LeadsKanban({ leads, brokers, onOpenLead, getStatusColor, showDisqualified = false }: LeadsKanbanProps) {
+  const baseColumns = [
     { id: "unassigned", title: "Non assigné", status: "unassigned" },
     { id: "assigned", title: "Assigné", status: "assigned" },
     { id: "contacted", title: "Contacté", status: "contacted" },
     { id: "converted", title: "Converti", status: "converted" },
     { id: "closed", title: "Fermé", status: "closed" },
   ]
+  
+  const columns = showDisqualified 
+    ? [...baseColumns, { id: "disqualified", title: "Disqualifié", status: "disqualified" }]
+    : baseColumns
 
   const getLeadsByStatus = (status: string) => {
     return leads.filter((lead) => lead.status === status || (!lead.status && status === "unassigned"))
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${showDisqualified ? 'lg:grid-cols-6' : 'lg:grid-cols-5'}`}>
       {columns.map((column) => {
         const columnLeads = getLeadsByStatus(column.status)
         return (

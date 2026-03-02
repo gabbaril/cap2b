@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { Search, LayoutGrid, Table } from "lucide-react"
+import { Search, LayoutGrid, Table, Eye, EyeOff } from "lucide-react"
 
 interface Broker {
   id: string
@@ -26,6 +26,8 @@ interface LeadsToolbarProps {
   brokers: Broker[]
   statuses: string[]
   propertyTypes: string[]
+  showDisqualified?: boolean
+  setShowDisqualified?: (value: boolean) => void
 }
 
 export function LeadsToolbar({
@@ -44,6 +46,8 @@ export function LeadsToolbar({
   brokers,
   statuses,
   propertyTypes,
+  showDisqualified,
+  setShowDisqualified,
 }: LeadsToolbarProps) {
   return (
     <div className="bg-white p-4 rounded-lg border space-y-4">
@@ -125,6 +129,20 @@ export function LeadsToolbar({
           </Button>
         </div>
       </div>
+      
+      {showDisqualified !== undefined && setShowDisqualified && (
+        <div className="flex items-center pt-2 border-t">
+          <Button
+            variant={showDisqualified ? "default" : "outline"}
+            size="sm"
+            onClick={() => setShowDisqualified(!showDisqualified)}
+            className="gap-2"
+          >
+            {showDisqualified ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+            Afficher les leads disqualifiés
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

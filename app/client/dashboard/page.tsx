@@ -11,6 +11,7 @@ import { getSupabaseBrowser } from "@/lib/supabase-client"
 import { LeadsToolbar } from "@/components/admin/leads/leads-toolbar"
 import { BrokerResetPasswordDialog } from "@/components/broker/reset-password-dialog"
 import { OpenToBrokerIndicator } from "@/components/admin/leads/open-to-broker-indicator"
+import { ClientLeadsKanban } from "@/components/client/leads-kanban"
 
 interface Lead {
   id: string
@@ -47,6 +48,7 @@ export default function BrokerDashboard() {
   const [statusFilter, setStatusFilter] = useState("all")
   const [propertyTypeFilter, setPropertyTypeFilter] = useState("all")
   const [sort, setSort] = useState<"desc" | "asc">("desc")
+  const [view, setView] = useState<"kanban" | "table">("kanban")
   const router = useRouter()
   const [showPasswordModal, setShowPasswordModal] = useState(false)
 
@@ -301,16 +303,23 @@ export default function BrokerDashboard() {
             setPropertyTypeFilter={setPropertyTypeFilter}
             sort={sort}
             setSort={setSort}
-            view="table"
-            setView={() => {}}
+            view={view}
+            setView={setView}
             brokers={[]} // no broker filter needed
             statuses={statuses}
             propertyTypes={propertyTypes}
+            showViewToggle={true}
           />
 
 
           {filteredLeads.length === 0 ? (
             <div className="text-center py-12 text-gray-500">Aucun lead trouvé</div>
+          ) : view === "kanban" ? (
+            <ClientLeadsKanban
+              leads={filteredLeads}
+              onOpenLead={(lead) => router.push(`/client/leads/${lead.id}`)}
+              getStatusColor={getStatusColor}
+            />
           ) : (
             <div className="overflow-x-auto">
               <Table>

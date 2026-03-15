@@ -28,6 +28,7 @@ interface LeadsToolbarProps {
   propertyTypes: string[]
   showDisqualified?: boolean
   setShowDisqualified?: (value: boolean) => void
+  showViewToggle?: boolean
 }
 
 export function LeadsToolbar({
@@ -48,6 +49,7 @@ export function LeadsToolbar({
   propertyTypes,
   showDisqualified,
   setShowDisqualified,
+  showViewToggle = false,
 }: LeadsToolbarProps) {
   return (
     <div className="bg-white p-4 rounded-lg border space-y-4">
@@ -119,7 +121,7 @@ export function LeadsToolbar({
         </Select>
 
         <div className="flex gap-2 ml-auto">
-          {assignedFilter !== undefined && setAssignedFilter && (
+          {(assignedFilter !== undefined && setAssignedFilter || showViewToggle) && (
           <Button variant={view === "kanban" ? "default" : "outline"} size="sm" onClick={() => setView("kanban")}>
             <LayoutGrid className="h-4 w-4" />
           </Button>

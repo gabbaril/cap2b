@@ -318,6 +318,7 @@ export default function BrokerDashboard() {
             <ClientLeadsKanban
               leads={filteredLeads}
               onOpenLead={(lead) => router.push(`/client/leads/${lead.id}`)}
+              onStatusChange={handleStatusChange}
               getStatusColor={getStatusColor}
             />
           ) : (
